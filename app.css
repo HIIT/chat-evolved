@@ -1,0 +1,32 @@
+body {
+   font-family: sans-serif;
+}
+
+#wrapper {
+  width: 80%;
+  margin: 10px auto;
+}
+
+input {
+  border: 2px solid #ddd;
+}
+
+.inline {
+  margin-left: 20px;
+}
+
+.timestamp {
+   color: grey;
+}
+
+.message {
+   border-bottom: 2px solid #ddd;
+   margin-top: 3px;
+}
+
+.collabse-toggle {
+    margin-left: 20px;
+    padding: 0px 7px;
+    background: green;
+    color: white;
+}

@@ -11,9 +11,13 @@
 </head>
 <body>
 
+<div id='wrapper'>
+
 <input id='input' label='Chat' class="ui-widget ui-corner-all"></input>
 
 <div id='conv-0'>
+
+</div>
 
 </div>
 
@@ -113,12 +117,11 @@ now.receiveMessage = function(msg){
     // experimental setup
     msg.allowResponse = msg.depth < 1;
     msg.flash = false;
-    msg.collabse = true;
+    msg.collabse = false;
 
     var v = now.user.variant;
 
     // plane chat
-/*
     if( v == 0 ) {
       msg.response = 0;
       msg.depth = 0;
@@ -126,7 +129,7 @@ now.receiveMessage = function(msg){
     } else {
       if( v % 2 == 0 ) msg.flash = msg.depth > 0;
       if( v > 2 ) msg.collabse = msg.allowResponse;
-    } */
+    }
     addLine( $('#conv-' + msg.response.id) , msg );
 }
 
