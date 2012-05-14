@@ -108,14 +108,18 @@ now.receiveMessage = function(msg){
     msg.flash = false;
     msg.collabse = false;
 
+    if( now._user ) now.user();
+    var v = now._user.variant;
+
     // plane chat
-    /**
-    msg.response = 0;
-    msg.depth = 0;
-    msg.allowResponse = false;
-    **/
-    // msg.flash = msg.depth > 0;
-    msg.collabse = msg.allowResponse 
+    if( v == 0 ) {
+      msg.response = 0;
+      msg.depth = 0;
+      msg.allowResponse = false;
+    } else {
+      if( v % 2 == 0 ) msg.flash = msg.depth > 0;
+      if( v > 2 ) msg.collabse = msg.allowResponse;
+    }
     addLine( $('#conv-' + msg.response) , msg );
 }
 
@@ -123,7 +127,32 @@ sendMsg( $('#input') , { id : 0, depth : -1 } );
 
 now.name = "Demo";
 // now.name = prompt("What's your name?", "");
-// now.user()
+
+function createUser() {
+   var nick = $('#nick');
+   // require a nick
+   if( nick.val() == '' ) {
+      nick.effect('pulsate');
+      return false;
+   }
+
+   // create a user
+   now.user();
+   console.log( now._user );
+   now._user.nick = nick.val();
+   return true;
+}
+
+// user login dialog
+var login = $('<div>');
+login.append( $('<input>', { id : 'nick' } ) );
+login.dialog( {
+  modal: true,
+  title: 'Provide a nick',
+  buttons: [ { text: "Ok", click: function(){ $(this).dialog("close"); } } ],
+  beforeClose: createUser,
+} );
+login.open();
 
 });
 </script>
