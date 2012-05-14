@@ -29,7 +29,7 @@ function addLine(c, msg) {
    $c.html( text );
    $cc.append( $c );
    // comment only if not too deep
-   if ( msg.depth < 1 ) {
+   if ( msg.allowResponse ) {
       var $i = $('<input>' , { class : 'inline', label: 'Comment' } );
       $cc.append( $i );
       var msg = msg;
