@@ -35,6 +35,11 @@ function addLine(c, msg) {
       var msg = msg;
       sendMsg( $i , msg );
    }
+   if ( msg.flash ) {
+       var $f = $('<div>', { html : msg.content } );
+       $('#conv-0').prepend( $f );
+       $f.fadeOut( 10 * 1000 );
+   }
    if  ( msg.depth == 0 ) {
      c.prepend( $cc );
    } else {
@@ -69,6 +74,12 @@ function sendMsg ( field, responseTo ) {
 $(document).ready(function(){
 
 now.receiveMessage = function(msg){
+    // experimental setup
+    msg.allowResponse = msg.depth < 1;
+    msg.flash = false;
+
+    // plane chat
+    
     addLine( $('#conv-' + msg.response) , msg );
 }
 
