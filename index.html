@@ -108,8 +108,7 @@ now.receiveMessage = function(msg){
     msg.flash = false;
     msg.collabse = false;
 
-    if( now._user ) now.user();
-    var v = now._user.variant;
+    var v = now.user.variant;
 
     // plane chat
     if( v == 0 ) {
@@ -125,9 +124,6 @@ now.receiveMessage = function(msg){
 
 sendMsg( $('#input') , { id : 0, depth : -1 } );
 
-now.name = "Demo";
-// now.name = prompt("What's your name?", "");
-
 function createUser() {
    var nick = $('#nick');
    // require a nick
@@ -136,10 +132,7 @@ function createUser() {
       return false;
    }
 
-   // create a user
-   now.user();
-   console.log( now._user );
-   now._user.nick = nick.val();
+   now.user.nick = nick.val();
    return true;
 }
 
@@ -152,7 +145,6 @@ login.dialog( {
   buttons: [ { text: "Ok", click: function(){ $(this).dialog("close"); } } ],
   beforeClose: createUser,
 } );
-login.open();
 
 });
 </script>
