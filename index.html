@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML5 demo</title>
+<script type='text/javascript' src='http://humanisti.fixme.fi:8888/nowjs/now.js' ></script>
+<script type='text/javascript' src='js/jquery-1.7.1.min.js'></script>
+<script type='text/javascript' src='js/jquery-ui-1.8.18.custom.min.js'></script>  
+<script type='text/javascript' src='js/date.js'></script>
+<link rel='stylesheet' type='text/css' href='css/ui-lightness/jquery-ui-1.8.18.custom.css' />
+<link rel='stylesheet' type='text/css' href='app.css' />
+</head>
+<body>
+
+<input id='input' label='Chat' class="ui-widget ui-corner-all"></input>
+
+<div id='conv-0'>
+
+</div>
+
+<script>
+function addLine(c, msg) {
+   // rewrap to object
+   msg.time = Date( msg.time );
+   var $cc = $('<div>' , { class : 'message' } );
+   var $c = $('<div>' , { id : 'conv-' + msg.id } );
+   // only inline when there is thread
+   if ( msg.depth > 0 ) $c.addClass( 'inline' );
+   var text = "<span class='timestamp'>" + msg.time + "</span>" + ' ' + msg.from + ' ' + msg.content;
+   $c.html( text );
+   $cc.append( $c );
+   // comment only if not too deep
+   if ( msg.depth < 1 ) {
+      var $i = $('<input>' , { class : 'inline', label: 'Comment' } );
+      $cc.append( $i );
+      var msg = msg;
+      sendMsg( $i , msg );
+   }
+   if  ( msg.depth == 0 ) {
+     c.prepend( $cc );
+   } else {
+     c.append( $cc );
+   }
+}
+
+function sendMsg ( field, responseTo ) {
+  var f = field;
+
+  // replace with 3rd party plugin?
+  f.focus( function() {
+    if( f.val() == f.attr('label') ) f.val('');
+  } );
+  f.blur( function() {   
+    if( f.val() == '' ) f.val( f.attr('label') );
+  } );
+
+  f.val( f.attr('label') );
+
+
+  // detect enter
+  f.keypress(function(e) {
+    if(e.keyCode == 13) {
+      var t = f.val();
+      f.val('');
+      now.distributeMessage( t , responseTo.id, responseTo.depth+1 );
+    }
+  } );
+}
+
+$(document).ready(function(){
+
+now.receiveMessage = function(msg){
+    addLine( $('#conv-' + msg.response) , msg );
+}
+
+sendMsg( $('#input') , { id : 0, depth : -1 } );
+
+now.name = "Demo";
+// now.name = prompt("What's your name?", "");
+// now.user()
+
+});
+</script>
+
+</body>
+</html>
