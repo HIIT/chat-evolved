@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>HTML5 demo</title>
+<title>Chat</title>
 <script type='text/javascript' src='http://humanisti.fixme.fi:8888/nowjs/now.js' ></script>
 <script type='text/javascript' src='js/jquery-1.7.1.min.js'></script>
 <script type='text/javascript' src='js/jquery-ui-1.8.18.custom.min.js'></script>  
@@ -30,26 +30,27 @@ function _text( msg ) {
    return text;
 }
 
-function addLine(c, msg) {
+function addLine( base, msg) {
    // rewrap to object
    msg.time = Date( msg.time );
 
    // container
-   var $cc = $('<div>' , { class : 'message' } );
+   var $container = $('<div>' , { class : 'message' } );
    // actual message
-   var $c = $('<div>' , { id : 'conv-' + msg.id } );
+   var $content = $('<div>' , { id : 'conv-' + msg.id } );
   
    // only inline when there is thread
-   if ( msg.depth > 0 ) $c.addClass( 'inline' );
+   if ( msg.depth > 0 ) $container.addClass( 'inline' );
 
-   $c.html( _text( msg ) );
-   $cc.append( $c );
+   $content.html( _text( msg ) );
+   $container.append( $content );
+
 
    var $i = null;
    // comment only if allowed
    if ( msg.allowResponse ) {
       $i = $('<input>' , { class : 'inline', label: 'Comment' } );
-      $cc.append( $i );
+      $container.append( $i );
       var msg = msg;
       sendMsg( $i , msg );
    }
@@ -65,25 +66,25 @@ function addLine(c, msg) {
       var $col = $('<span>' , {html: '-', class: 'collabse-toggle'} );
       // todo: cleanup!
       $col.click( function() {
-         $.each( $c.children().find('div') , function(i, e) { $(e).toggle(); } );
+         $.each( $content.children().find('div') , function(i, e) { $(e).toggle(); } );
          if( $i ) $i.toggle();
          var t = '-';
          if( $(this).html() == t ) t = '+';
          $(this).html( t );
       } );
-      $c.append( $col );
+      $content.append( $col );
 
       // TODO: could be cleaned!
       // check parent's state
       var p = $('#conv-' + msg.response.id ).find('.collabse-toggle').html();
-      if( p == '+' ) $c.hide();
+      if( p == '+' ) $content.hide();
    }
 
    // append on top or on bottom of container
    if( msg.depth == 0 ) {
-     c.prepend( $cc );
+     base.prepend( $container );
    } else {
-     c.append( $cc );
+     base.append( $container );
    }
 }
 
@@ -123,7 +124,7 @@ now.receiveMessage = function(msg){
 
     // plane chat
     if( v == 0 ) {
-      msg.response = 0;
+      msg.response.id = 0;
       msg.depth = 0;
       msg.allowResponse = false;
     } else {
