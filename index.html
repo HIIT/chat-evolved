@@ -21,7 +21,7 @@
 function _text( msg ) {
    var text = "";
    text += "<span class='timestamp'>" + msg.time + "</span> ";
-   text += msg.from + ":";
+   text += msg.from.nick + ": ";
    text += msg.content;
    return text;
 }
@@ -58,14 +58,21 @@ function addLine(c, msg) {
    }
 
    if ( msg.collabse ) {
-      console.log('a');
-      var $col = $('<span>' , {html: 'F'} );
+      var $col = $('<span>' , {html: '-', class: 'collabse-toggle'} );
       // todo: cleanup!
       $col.click( function() {
          $.each( $c.children().find('div') , function(i, e) { $(e).toggle(); } );
          if( $i ) $i.toggle();
+         var t = '-';
+         if( $(this).html() == t ) t = '+';
+         $(this).html( t );
       } );
       $c.append( $col );
+
+      // TODO: could be cleaned!
+      // check parent's state
+      var p = $('#conv-' + msg.response.id ).find('.collabse-toggle').html();
+      if( p == '+' ) $c.hide();
    }
 
    // append on top or on bottom of container
@@ -95,7 +102,7 @@ function sendMsg ( field, responseTo ) {
     if(e.keyCode == 13) {
       var t = f.val();
       f.val('');
-      now.distributeMessage( t , responseTo.id, responseTo.depth+1 );
+      now.distributeMessage( t , responseTo );
     }
   } );
 }
@@ -106,11 +113,12 @@ now.receiveMessage = function(msg){
     // experimental setup
     msg.allowResponse = msg.depth < 1;
     msg.flash = false;
-    msg.collabse = false;
+    msg.collabse = true;
 
     var v = now.user.variant;
 
     // plane chat
+/*
     if( v == 0 ) {
       msg.response = 0;
       msg.depth = 0;
@@ -118,8 +126,8 @@ now.receiveMessage = function(msg){
     } else {
       if( v % 2 == 0 ) msg.flash = msg.depth > 0;
       if( v > 2 ) msg.collabse = msg.allowResponse;
-    }
-    addLine( $('#conv-' + msg.response) , msg );
+    } */
+    addLine( $('#conv-' + msg.response.id) , msg );
 }
 
 sendMsg( $('#input') , { id : 0, depth : -1 } );
