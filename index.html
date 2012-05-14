@@ -41,9 +41,10 @@ function addLine(c, msg) {
    $c.html( _text( msg ) );
    $cc.append( $c );
 
+   var $i = null;
    // comment only if allowed
    if ( msg.allowResponse ) {
-      var $i = $('<input>' , { class : 'inline', label: 'Comment' } );
+      $i = $('<input>' , { class : 'inline', label: 'Comment' } );
       $cc.append( $i );
       var msg = msg;
       sendMsg( $i , msg );
@@ -54,6 +55,17 @@ function addLine(c, msg) {
        var $f = $('<div>', { html : _text( msg ) } );
        $('#conv-0').prepend( $f );
        $f.fadeOut( 4 * 1000 );
+   }
+
+   if ( msg.collabse ) {
+      console.log('a');
+      var $col = $('<span>' , {html: 'F'} );
+      // todo: cleanup!
+      $col.click( function() {
+         $.each( $c.children().find('div') , function(i, e) { $(e).toggle(); } );
+         if( $i ) $i.toggle();
+      } );
+      $c.append( $col );
    }
 
    // append on top or on bottom of container
@@ -94,6 +106,7 @@ now.receiveMessage = function(msg){
     // experimental setup
     msg.allowResponse = msg.depth < 1;
     msg.flash = false;
+    msg.collabse = false;
 
     // plane chat
     /**
@@ -101,7 +114,8 @@ now.receiveMessage = function(msg){
     msg.depth = 0;
     msg.allowResponse = false;
     **/
-    msg.flash = msg.depth > 0;   
+    // msg.flash = msg.depth > 0;
+    msg.collabse = msg.allowResponse 
     addLine( $('#conv-' + msg.response) , msg );
 }
 
