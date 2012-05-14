@@ -18,29 +18,46 @@
 </div>
 
 <script>
+function _text( msg ) {
+   var text = "";
+   text += "<span class='timestamp'>" + msg.time + "</span> ";
+   text += msg.from + ":";
+   text += msg.content;
+   return text;
+}
+
 function addLine(c, msg) {
    // rewrap to object
    msg.time = Date( msg.time );
+
+   // container
    var $cc = $('<div>' , { class : 'message' } );
+   // actual message
    var $c = $('<div>' , { id : 'conv-' + msg.id } );
+  
    // only inline when there is thread
    if ( msg.depth > 0 ) $c.addClass( 'inline' );
-   var text = "<span class='timestamp'>" + msg.time + "</span>" + ' ' + msg.from + ' ' + msg.content;
-   $c.html( text );
+
+   $c.html( _text( msg ) );
    $cc.append( $c );
-   // comment only if not too deep
+
+   // comment only if allowed
    if ( msg.allowResponse ) {
       var $i = $('<input>' , { class : 'inline', label: 'Comment' } );
       $cc.append( $i );
       var msg = msg;
       sendMsg( $i , msg );
    }
+
+   // flash the content on the main stream
    if ( msg.flash ) {
-       var $f = $('<div>', { html : msg.content } );
+       var $f = $('<div>', { html : _text( msg ) } );
        $('#conv-0').prepend( $f );
-       $f.fadeOut( 10 * 1000 );
+       $f.fadeOut( 4 * 1000 );
    }
-   if  ( msg.depth == 0 ) {
+
+   // append on top or on bottom of container
+   if( msg.depth == 0 ) {
      c.prepend( $cc );
    } else {
      c.append( $cc );
@@ -79,7 +96,12 @@ now.receiveMessage = function(msg){
     msg.flash = false;
 
     // plane chat
-    
+    /**
+    msg.response = 0;
+    msg.depth = 0;
+    msg.allowResponse = false;
+    **/
+    msg.flash = msg.depth > 0;   
     addLine( $('#conv-' + msg.response) , msg );
 }
 
