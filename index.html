@@ -39,10 +39,13 @@ function addLine( base, msg) {
    // actual message
    var $content = $('<div>' , { id : 'conv-' + msg.id } );
   
+   $container.addClass( 'depth-' + msg.depth );
+
    // only inline when there is thread
    if ( msg.depth > 0 ) $container.addClass( 'inline' );
 
    $content.html( _text( msg ) );
+
    $container.append( $content );
 
 
@@ -121,6 +124,7 @@ now.receiveMessage = function(msg){
     msg.collabse = false;
 
     var v = now.user.variant;
+    v = 1;
 
     // plane chat
     if( v == 0 ) {

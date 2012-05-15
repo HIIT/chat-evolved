@@ -31,3 +31,11 @@ input {
     background: green;
     color: white;
 }
+
+.depth-0 {
+    font-weight: bold;
+}
+
+.depth-1 {
+    font-weight: normal;
+}
