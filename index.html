@@ -153,7 +153,7 @@ var login = $('<div>');
 login.append( $('<input>', { id : 'nick' } ) );
 login.dialog( {
   modal: true,
-  title: 'Provide a nick',
+  title: 'Who are you?',
   buttons: [ { text: "Ok", click: function(){ $(this).dialog("close"); } } ],
   beforeClose: createUser,
 } );
