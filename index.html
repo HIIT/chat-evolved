@@ -32,7 +32,7 @@ function _text( msg ) {
 
 function addLine( base, msg) {
    // rewrap to object
-   msg.time = Date( msg.time );
+   msg.time = new Date( msg.time );
 
    // container
    var $container = $('<div>' , { class : 'message' } );
