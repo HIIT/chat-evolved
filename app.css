@@ -20,7 +20,8 @@ input {
 }
 
 .message {
-   border-bottom: 2px solid #ddd;
+   border-bottom: 2px dashed #ddd;
+   padding-bottom: 2px;
    margin-top: 3px;
 }
 
