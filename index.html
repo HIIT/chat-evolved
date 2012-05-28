@@ -51,10 +51,9 @@ function addLine( base, msg) {
    $container.append( $content );
 
 
-   var $i = null;
    // comment only if allowed
    if ( msg.allowResponse ) {
-      $i = $('<input>' , { class : 'inline', label: 'Comment' } );
+      var $i = $('<input>' , { class : 'inline', label: 'Comment' } );
       $container.append( $i );
       var msg = msg;
       sendMsg( $i , msg );
@@ -68,21 +67,13 @@ function addLine( base, msg) {
    }
 
    if ( msg.collabse ) {
-      var $col = $('<span>' , {html: '-', class: 'collabse-toggle'} );
+      var $col = $('<span>' , {html: '', class: 'collabse-toggle'} );
       // todo: cleanup!
       $col.click( function() {
-         $.each( $content.children().find('div') , function(i, e) { $(e).toggle(); } );
-         if( $i ) $i.toggle();
-         var t = '-';
-         if( $(this).html() == t ) t = '+';
-         $(this).html( t );
+         $content.parent().find('.inline').toggle('blind');
+         $col.toggleClass('collabsed-toggle');
       } );
       $content.append( $col );
-
-      // TODO: could be cleaned!
-      // check parent's state
-      var p = $('#conv-' + msg.response.id ).find('.collabse-toggle').html();
-      if( p == '+' ) $content.hide();
    }
 
    // append on top or on bottom of container
@@ -126,7 +117,7 @@ now.receiveMessage = function(msg){
     msg.collabse = false;
 
     var v = now.user.variant;
-    v = 3;
+    v = 4;
 
     // plane chat
     if( v == 0 ) {
