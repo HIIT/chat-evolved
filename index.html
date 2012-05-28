@@ -24,9 +24,9 @@
 </div>
 
 <script>
-function _text( msg ) {
+function _text( msg, timestamp ) {
    var text = "";
-   text += "<span class='timestamp'>" + msg.time + "</span> ";
+   if( timestamp ) text += "<span class='timestamp'>" + msg.time + "</span> ";
    text += msg.from.nick + ": ";
    text += msg.content;
    return text;
@@ -46,7 +46,7 @@ function addLine( base, msg) {
    // only inline when there is thread
    if ( msg.depth > 0 ) $container.addClass( 'inline' );
 
-   $content.html( _text( msg ) );
+   $content.html( _text( msg, true ) );
 
    $container.append( $content );
 
@@ -61,7 +61,7 @@ function addLine( base, msg) {
 
    // flash the content on the main stream
    if ( msg.flash ) {
-       var $f = $('<div>', { html : _text( msg ) } );
+       var $f = $('<div>', { html : _text( msg , false ) , class: 'highlight' } );
        $('#conv-0').prepend( $f );
        $f.fadeOut( 4 * 1000 );
    }
@@ -81,6 +81,11 @@ function addLine( base, msg) {
      base.prepend( $container );
    } else {
      base.append( $container );
+
+     // hide message if thread is collabsed
+     if( base.children().is(':hidden') ) {
+          $container.toggle();
+     }
    }
 }
 

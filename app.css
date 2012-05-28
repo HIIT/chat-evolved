@@ -52,3 +52,9 @@ input {
 .collabsed-toggle {
     background-position: -64px -16px
 }
+
+.highlight {
+    font-weight: light;
+    border-left: 1px solid grey;
+    padding-left: 7px;
+}
