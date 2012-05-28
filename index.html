@@ -3,8 +3,10 @@
 <head>
 <title>Chat</title>
 <script type='text/javascript' src='http://humanisti.fixme.fi:8888/nowjs/now.js' ></script>
-<script type='text/javascript' src='js/jquery-1.7.1.min.js'></script>
-<script type='text/javascript' src='js/jquery-ui-1.8.18.custom.min.js'></script>  
+<script type='text/javascript' src='js/jquery.js'></script>
+<script type='text/javascript' src='js/jquery-ui.js'></script>
+<script type='text/javascript' src='js/jquery.collapse.js'></script>
+<script type='text/javascript' src='js/jquery.cookie.js'></script>
 <script type='text/javascript' src='js/date.js'></script>
 <link rel='stylesheet' type='text/css' href='css/ui-lightness/jquery-ui-1.8.18.custom.css' />
 <link rel='stylesheet' type='text/css' href='app.css' />
@@ -124,7 +126,7 @@ now.receiveMessage = function(msg){
     msg.collabse = false;
 
     var v = now.user.variant;
-    v = 1;
+    v = 3;
 
     // plane chat
     if( v == 0 ) {
