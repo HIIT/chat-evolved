@@ -83,8 +83,11 @@ function addLine( base, msg) {
    } else {
      base.append( $container );
 
+     kissa = base;
+
      // hide message if thread is collabsed
-     if( base.children().is(':hidden') ) {
+     // todo: clean ugly stuff
+     if( base.find('.collabsed-toggle').length > 0 ) {
           $container.toggle();
 	  base.find('.collabse-toggle').addClass('collabse-toggle-highlight');
      }
