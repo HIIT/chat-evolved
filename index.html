@@ -71,6 +71,7 @@ function addLine( base, msg) {
       $col.click( function() {
          $content.parent().find('.inline').toggle('blind');
          $col.toggleClass('collabsed-toggle');
+         $col.removeClass('collabse-toggle-highlight');
       } );
       $content.append( $col );
    }
@@ -84,6 +85,7 @@ function addLine( base, msg) {
      // hide message if thread is collabsed
      if( base.children().is(':hidden') ) {
           $container.toggle();
+	  base.find('.collabse-toggle').addClass('collabse-toggle-highlight');
      }
    }
 }
