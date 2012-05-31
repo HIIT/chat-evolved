@@ -63,6 +63,7 @@ function addLine( base, msg) {
        var $f = $('<div>', { html : text , class: 'highlight' } );
        $('#conv-0').prepend( $f );
        $f.fadeOut( 4 * 1000 );
+       setTimeout( function(){ $f.remove(); } , 4 * 1000 );
    }
 
    if ( msg.collabse ) {
