@@ -26,16 +26,14 @@
 <script>
 function _text( msg, timestamp ) {
    var text = "";
-   if( timestamp ) text += "<span class='timestamp'>" + msg.time + "</span> ";
+   var time = new Date( msg.time );
+   if( timestamp ) text += "<span class='timestamp'>" + time + "</span> ";
    text += msg.from.nick + ": ";
    text += msg.content;
    return text;
 }
 
 function addLine( base, msg) {
-   // rewrap to object
-   msg.time = new Date( msg.time );
-
    // container
    var $container = $('<div>' , { class : 'message' } );
    // actual message
@@ -61,7 +59,8 @@ function addLine( base, msg) {
 
    // flash the content on the main stream
    if ( msg.flash ) {
-       var $f = $('<div>', { html : _text( msg , false ) , class: 'highlight' } );
+       var text = _text( msg , false ) + ' in ' + _text( msg.response , true ).substring( 0, 60 );
+       var $f = $('<div>', { html : text , class: 'highlight' } );
        $('#conv-0').prepend( $f );
        $f.fadeOut( 4 * 1000 );
    }
