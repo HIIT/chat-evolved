@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chat</title>
+<script type='text/javascript' src='http://humanisti.fixme.fi:8888/nowjs/now.js' ></script>
+<script type='text/javascript' src='js/jquery.js'></script>
+<script type='text/javascript' src='js/jquery-ui.js'></script>
+<script type='text/javascript' src='js/underscore.js'></script>
+<script type='text/javascript' src='js/d3.js'></script>
+<script type='text/javascript' src='js/date.js'></script>
+<link rel='stylesheet' type='text/css' href='css/ui-lightness/jquery-ui-1.8.18.custom.css' />
+<link rel='stylesheet' type='text/css' href='app.css' />
+</head>
+<body>
+
+<style>
+.chart div {
+ font: 10px sans-serif;
+ background-color: steelblue;
+ text-align: right;
+ padding: 3px;
+ margin: 1px;
+ color: white;
+}
+</style>
+
+<div id='wrapper'>
+
+<div id='users'></div>
+
+</div>
+
+<script>
+var comments = {};
+
+$(document).ready( function(){
+
+now.receiveMessage = function(msg){
+    var nick = msg.from.nick;
+    if( ! _.has( comments , nick ) ) {
+          comments[nick] = [];
+    }
+    comments[nick].push( msg );
+    draw();
+}
+
+} );
+
+function draw() {
+
+    $('body').html('');
+    _.each( comments, function(o,key){ $('body').append( key + ':' + o.length ); } )
+    
+
+}
+</script>
+
+</body>
+</html>
