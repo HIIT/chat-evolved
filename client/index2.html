@@ -74,7 +74,7 @@ function addLine( base, msg) {
       sendMsg( i , msg );
    }
 
-   if ( msg.likes ) {
+   if ( msg.likes && msg.depth > 0 ) {
       var likes = $('<span>', {class : 'like-button'} );
       var like = $('<span>', { html : '+ ' } );
       var count = $('<span>', { html : '0', id : 'conv-' + msg.id + '-likes' });
