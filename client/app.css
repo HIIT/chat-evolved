@@ -44,7 +44,7 @@ input {
 }
 
 .collabse-toggle {
-   background:url('css/ui-lightness/images/ui-icons_222222_256x240.png');
+   background:url('./lib/css/ui-lightness/images/ui-icons_222222_256x240.png');
    background-position: -32px -16px;
    float:left;
    max-width: 16px;
@@ -57,7 +57,7 @@ input {
 }
 
 .collabse-toggle-highlight {
-   background:url('css/ui-lightness/images/ui-icons_228ef1_256x240.png');
+   background:url('./lib/css/ui-lightness/images/ui-icons_228ef1_256x240.png');
    background-position: -64px -16px
 }
 
