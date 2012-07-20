@@ -25,3 +25,16 @@ var login = function () {
     });
 
 };
+
+var _text = function (msg, timestamp) {
+    
+    var text, time;
+    text = "";
+    time = new Date(msg.time);
+
+    if( timestamp ) text += "<span class='timestamp'>" + time + "</span> ";
+    if( ! msg.anonym ) text += msg.from.nick + ': ';
+
+    text += msg.content;
+    return text;
+}

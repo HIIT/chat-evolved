@@ -52,15 +52,6 @@ $('.options').buttonset();
 </div>
 
 <script>
-function _text( msg, timestamp ) {
-   var text = "";
-   var time = new Date( msg.time );
-   if( timestamp ) text += "<span class='timestamp'>" + time + "</span> ";
-   if( ! msg.anonym ) text += msg.from.nick + ': ';
-   text += msg.content;
-   return text;
-}
-
 function addLine( base, msg) {
    // container
    var $container = $('<div>' , { class : 'message' } );
@@ -171,7 +162,7 @@ now.countVote = function( id ) {
 }
 
 now.receiveMessage = function(msg){
-    // experimental setup
+  
     msg.allowResponse = msg.depth < 1;
     msg.flash = false;
     msg.collabse = false;
