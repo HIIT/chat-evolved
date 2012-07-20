@@ -64,7 +64,7 @@ function addLine( base, msg) {
 
    content.html( _text( msg, true ) );
 
-   container.append( $content );
+   container.append( content );
 
    // comment only if allowed
    if ( msg.allowResponse ) {
@@ -80,7 +80,7 @@ function addLine( base, msg) {
       var count = $('<span>', { html : '0', id : 'conv-' + msg.id + '-likes' });
       likes.append( like );
       likes.append( count );
-      $content.append( likes );
+      content.append( likes );
       likes.on('click', function(){
 		    $(this).off('click');
 		    like.hide('fade');
