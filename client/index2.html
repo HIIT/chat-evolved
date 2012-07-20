@@ -98,12 +98,11 @@ function addLine( base, msg) {
        setTimeout( function(){ flash.remove(); } , timeout );
    }
 
-   msg.collabse = true;
    if ( msg.collabse ) {
       // item that can be collabsed
       var col = $('<span>' , { html: 'hello', class: 'collabse-toggle'} );
 
-      col.click( function() {
+      col.on( 'click', function() {
          container.find('.inline').toggle('blind');
          $(this).toggleClass('collabse-toggled');
          // remove highlight if any
@@ -129,6 +128,7 @@ function addLine( base, msg) {
 
 function sendMsg ( field, re ) {
   var f = field;
+  var re = re;
 
   // replace with 3rd party plugin?
   f.focus( function() {
@@ -140,17 +140,18 @@ function sendMsg ( field, re ) {
 
   f.val( f.attr('label') );
 
-  if( re.depth == 0 ) {
-     re.anonym = $('[name="anonym"]:checked').val() == "true";
-     re.likes = $('[name="likes"]:checked').val() == "true";
-  }
-
   // detect enter
   f.keypress(function(e) {
     if(e.keyCode == 13) {
       var t = f.val();
       f.val('');
-      now.distributeMessage( t , re );
+
+     if( re.depth == -1 ) {
+        re.anonym = $('[name="anonym"]:checked').val() == "true";
+        re.likes = $('[name="likes"]:checked').val() == "true";
+     }
+
+     now.distributeMessage( t , re );
     }
   } );
 }
@@ -161,7 +162,6 @@ $(document).ready(function(){
     var val = $('#conv-' + id + '-likes').html();
     val = parseInt( val );
     $('#conv-' + id + '-likes').html( ++val );
-    console.log( id );
   }
 
   now.receiveMessage = function(msg){
