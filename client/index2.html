@@ -98,21 +98,24 @@ function addLine( base, msg) {
        setTimeout( function(){ flash.remove(); } , timeout );
    }
 
+   msg.collabse = true;
    if ( msg.collabse ) {
-      var col = $('<span>' , {class: 'collabse-toggle'} );
-      // todo: cleanup!
+      // item that can be collabsed
+      var col = $('<span>' , { html: 'hello', class: 'collabse-toggle'} );
+
       col.click( function() {
-         content.parent().find('.inline').toggle('blind');
-         col.toggleClass('collabsed-toggle');
-         col.removeClass('collabse-toggle-highlight');
+         container.find('.inline').toggle('blind');
+         $(this).toggleClass('collabse-toggled');
+         // remove highlight if any
+         $(this).removeClass('collabse-toggled-highlight');
       } );
-      content.append( $col );
+
+      content.append( col );
 
      // hide message if thread is collabsed
-     // todo: clean ugly stuff
-     if( base.find('.collabsed-toggle').length > 0 ) {
-          container.toggle();
-          base.find('.collabse-toggle').addClass('collabse-toggle-highlight');
+     if( base.children().hasClass('collabse-toggled') ) {
+          container.hide();
+          base.find('.collabse-toggle').addClass('collabse-toggled-highlight');
      }
    }
 
@@ -165,7 +168,7 @@ $(document).ready(function(){
 
     msg.allowResponse = msg.depth < 1;
     msg.flash = false;
-    msg.collabse = false;
+    msg.collabse = true;
     msg.anonym = msg.response.anonym;
     msg.likes = msg.response.likes;
 
