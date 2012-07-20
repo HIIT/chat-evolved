@@ -10,12 +10,37 @@
 <script type='text/javascript' src='js/date.js'></script>
 <link rel='stylesheet' type='text/css' href='css/ui-lightness/jquery-ui-1.8.18.custom.css' />
 <link rel='stylesheet' type='text/css' href='app.css' />
+<style>
+.options {
+   float: right;
+}
+.like-button {
+    margin-left: 20px;
+    border: 1px solid grey;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+</style>
 </head>
 <body>
 
 <div id='wrapper'>
 
-<input id='input' label='Chat' class="ui-widget ui-corner-all"></input>
+<input id='input' label='Topic' class="ui-widget ui-corner-all" style="height: 32px;"></input>
+
+<div id="anonym" class='options'>
+<input type="radio" id="radio1" name="anonym" value="true" /><label for="radio1">Anonymous</label>
+<input type="radio" id="radio2" name="anonym" value="false" checked="true" /><label for="radio2">With name</label>
+</div>
+
+<div id="likes" class='options'>
+<input type="radio" id="radio3" name="likes" value="true" /><label for="radio3">With likes</label>
+<input type="radio" id="radio4" name="likes" value="false" checked="true" /><label for="radio4">No likes</label>
+</div>
+
+<script type="text/javascript">
+$('.options').buttonset();
+</script>
 
 <div id='conv-0'>
 
@@ -28,7 +53,7 @@ function _text( msg, timestamp ) {
    var text = "";
    var time = new Date( msg.time );
    if( timestamp ) text += "<span class='timestamp'>" + time + "</span> ";
-   text += msg.from.nick + ": ";
+   if( ! msg.anonym ) text += msg.from.nick + ': ';
    text += msg.content;
    return text;
 }
@@ -48,13 +73,26 @@ function addLine( base, msg) {
 
    $container.append( $content );
 
-
    // comment only if allowed
    if ( msg.allowResponse ) {
       var $i = $('<input>' , { class : 'inline', label: 'Comment' } );
       $container.append( $i );
       var msg = msg;
       sendMsg( $i , msg );
+   }
+
+   if ( msg.likes ) {
+      var likes = $('<span>', {class : 'like-button'} );
+      var like = $('<span>', { html : '+ ' } );
+      var count = $('<span>', { html : '0', id : msg.id + '-likes' } );
+      likes.append( like );
+      likes.append( count );
+      $content.append( likes );
+      likes.click( function(){
+		$(this).off('click');
+		like.hide('fade');
+                now.vote( msg, now.user );
+      } );
    }
 
    // flash the content on the main stream
@@ -83,8 +121,6 @@ function addLine( base, msg) {
    } else {
      base.append( $container );
 
-     kissa = base;
-
      // hide message if thread is collabsed
      // todo: clean ugly stuff
      if( base.find('.collabsed-toggle').length > 0 ) {
@@ -94,7 +130,7 @@ function addLine( base, msg) {
    }
 }
 
-function sendMsg ( field, responseTo ) {
+function sendMsg ( field, re ) {
   var f = field;
 
   // replace with 3rd party plugin?
@@ -107,41 +143,42 @@ function sendMsg ( field, responseTo ) {
 
   f.val( f.attr('label') );
 
+  if( re.depth == 0 ) {
+     re.anonym = $('[name="anonym"]:checked').val() == "true";
+     re.likes = $('[name="likes"]:checked').val() == "true";
+  }
 
   // detect enter
   f.keypress(function(e) {
     if(e.keyCode == 13) {
       var t = f.val();
       f.val('');
-      now.distributeMessage( t , responseTo );
+      now.distributeMessage( t , re );
     }
   } );
 }
 
 $(document).ready(function(){
 
+now.countVote = function( id ) {
+    var val = $('#' + id + '-likes').html();
+    val = parseInt( val );
+    $('#' + id + '-likes').html( ++val );
+    console.log( id );
+}
+
 now.receiveMessage = function(msg){
     // experimental setup
     msg.allowResponse = msg.depth < 1;
     msg.flash = false;
     msg.collabse = false;
+    msg.anonym = msg.response.anonym;
+    msg.likes = msg.response.likes;
 
-    var v = now.user.variant;
-    v = 4;
-
-    // plane chat
-    if( false ) {
-      msg.response.id = 0;
-      msg.depth = 0;
-      msg.allowResponse = false;
-    } else {
-      if( v % 2 == 0 ) msg.flash = msg.depth > 0;
-      if( v >= 2 ) msg.collabse = msg.allowResponse;
-    }
     addLine( $('#conv-' + msg.response.id) , msg );
 }
 
-sendMsg( $('#input') , { id : 0, depth : -1 } );
+sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );
 
 function createUser() {
    var nick = $('#nick');

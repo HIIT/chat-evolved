@@ -20,7 +20,9 @@ input {
 }
 
 .message {
-   border-bottom: 2px dashed #ddd;
+   /*
+	border-bottom: 1px dashed #ddd;
+   */
    padding-bottom: 2px;
    margin-top: 3px;
 }
@@ -34,6 +36,7 @@ input {
 
 .depth-0 {
     font-weight: bold;
+    border-bottom: 1px solid #ccc;
 }
 
 .depth-1 {

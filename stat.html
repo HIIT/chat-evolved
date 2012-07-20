@@ -26,12 +26,26 @@
 
 <div id='wrapper'>
 
-<div id='users'></div>
+<table id='users'>
+<tr>
+<td>User</td>
+<td>Opening</td>
+<td>Openings avr</td>
+<td>Response</td>
+<td>Response avr</td>
+<td>Total</td>
+<td>Avr</td>
+</tr>
+</table>
 
 </div>
 
 <script>
+// store all comments per user here
 var comments = {};
+
+// count all data here
+var data = {};
 
 $(document).ready( function(){
 
@@ -39,19 +53,53 @@ now.receiveMessage = function(msg){
     var nick = msg.from.nick;
     if( ! _.has( comments , nick ) ) {
           comments[nick] = [];
+
+	  // store all data once
+          data[nick] = {};
+          var k = data[nick];
+          k.id = msg.from.variant;
+          // extend propoerties
+          k.opening = 0;
+          k.openingLength = 0;
+          k.response = 0;
+          k.responseLength = 0;
     }
     comments[nick].push( msg );
-    draw();
+
+    count(msg);
+    show();
 }
 
 } );
 
-function draw() {
+function count(msg) {
+    var k = data[msg.from.nick];
+    if( msg.depth == 0 ) {
+        k.opening++;
+        k.openingLength += msg.content.length;
+    } else {
+        k.response++;
+        k.responseLenght += msg.content.length;
+    }
+}
 
-    $('body').html('');
-    _.each( comments, function(o,key){ $('body').append( key + ':' + o.length ); } )
-    
+function show() {
+  $('.data').remove();
+  $.each( data , function(a,b) {
+     var t = $('<tr>', { class : 'data' } );
+     t.append( $('<td>').html( a + ' ' + b.id ) );
+     t.append( $('<td>').html( b.opening ) );
+     t.append( $('<td>').html( b.openingLength / b.opening ) );
+     t.append( $('<td>').html( b.response ) );
+     t.append( $('<td>').html( b.responseLength / b.response ) );
 
+     var tot = b.response + b.opening;
+     var totL = b.openingLength + b.responseLength;
+     t.append( $('<td>').html( tot ) );
+     t.append( $('<td>').html( totL / tot ) );
+
+     $('#users').append( t );
+  } );
 }
 </script>
 
