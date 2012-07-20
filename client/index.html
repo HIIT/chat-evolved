@@ -9,7 +9,10 @@
 <script type='text/javascript' src='lib/jquery.cookie.js'></script>
 <script type='text/javascript' src='lib/date.js'></script>
 <link rel='stylesheet' type='text/css' href='lib/css/ui-lightness/jquery-ui.css' />
+
+<script type='text/javascript' src='js/utils.js'></script>
 <link rel='stylesheet' type='text/css' href='app.css' />
+
 </head>
 <body>
 
@@ -143,29 +146,8 @@ now.receiveMessage = function(msg){
 
 sendMsg( $('#input') , { id : 0, depth : -1 } );
 
-function createUser() {
-   var nick = $('#nick');
-   // require a nick
-   if( nick.val() == '' ) {
-      nick.effect('pulsate');
-      return false;
-   }
+login();
 
-   now.user.nick = nick.val();
-   return true;
-}
-
-// user login dialog
-var login = $('<div>');
-login.append( $('<input>', { id : 'nick' } ) );
-login.dialog( {
-  modal: true,
-  title: 'Who are you?',
-  buttons: [ { text: "Ok", click: function(){ $(this).dialog("close"); } } ],
-  beforeClose: createUser,
-} );
-
-});
 </script>
 
 </body>
