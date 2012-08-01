@@ -11,12 +11,15 @@ var login = function () {
         }
 
         now.user.nick = nick.val();
+        // todo: validate email address!
+        now.user.email = $('#email').val();
         return true;
     }
 
     // user login dialog
-    var login = $('<div>');
-    login.append($('<input>', { id : 'nick' }));
+     var login = $('<div>');
+    $('<p>', {html: 'Nick '} ).append($('<input>', { id : 'nick' }) ).appendTo(login);
+    $('<p>', {html: 'Email '} ).append($('<input>', { id : 'email' }) ).appendTo(login);
     login.dialog({
         modal: true,
         title: 'Who are you?',
