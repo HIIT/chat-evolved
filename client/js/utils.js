@@ -3,25 +3,30 @@
 var login = function () {
 
     function createUser() {
+        var state = true;
+
         var nick = $('#nick');
         // require a nick
         if (nick.val() === '') {
             nick.effect('pulsate');
-            return false;
+            state = false;
         }
-
-        // now.user.nick = nick.val();
 
         // simple and stupid
         var mailtest = /.*@.*\..*/;
+
         var mail = $('#email');
-        if( ! mailtest.test( mail.val() ) ) {
+
+        if( ! mailtest.test(mail.val()) ) {
            mail.effect('pulsate');
-           return false; 
+           state = false;
         }
 
-        now.user.email = mail;
-        return true;
+        if( state ) {
+            now.user.nick = nick.val();
+            now.user.email = mail.val();
+        }
+        return state;
     }
 
     // user login dialog
