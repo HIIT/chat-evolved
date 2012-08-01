@@ -10,9 +10,17 @@ var login = function () {
             return false;
         }
 
-        now.user.nick = nick.val();
-        // todo: validate email address!
-        now.user.email = $('#email').val();
+        // now.user.nick = nick.val();
+
+        // simple and stupid
+        var mailtest = /.*@.*\..*/;
+        var mail = $('#email');
+        if( ! mailtest.test( mail.val() ) ) {
+           mail.effect('pulsate');
+           return false; 
+        }
+
+        now.user.email = mail;
         return true;
     }
 
