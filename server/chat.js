@@ -8,11 +8,15 @@ var nowjs = require("now");
 var everyone = nowjs.initialize(httpServer);
 
 var groups = []
+var logs = []
+var votes = []
 
 // get deciderd number of groups
 for( var i = 0; i < 2; i++ ) {
     var group = nowjs.getGroup("group-" + i);
     groups.push( group );
+    logs.push( [] );
+    votes.push( [] );
 }
 
 // common content
@@ -51,7 +55,7 @@ everyone.now.distributeMessage = function(message, response ){
   }
   console.log( variant );
   console.log( msg );
-  everyone.log.push( msg );
+  // everyone.log.push( msg );
   console.log( everyone.log );
   groups[ variant ].now.receiveMessage( msg );
   if( message == '/clearall' ) {
@@ -69,12 +73,12 @@ nowjs.on( 'connect' , function() {
    this.now.user = { id : id, variant : group };
    groups[ group ].addUser( this.user.clientId );
    // push log
-   for( var e in everyone.log ) {
-      e = everyone.log[ e ];
+   for( var e in logs[ group ] ) {
+      e = logs[ group ][ e ];
       this.now.receiveMessage( e );
    }
-   for( var e in everyone.votes ) {
-        e = everyone.votes[ e ];
+   for( var e in votes [ group ] ) {
+        e = votes[ group ][ e ];
         this.now.countVote( e );
         console.log( 'send ' + e );
    }
