@@ -24,7 +24,7 @@ everyone.votes = [];
 
 everyone.now.vote = function(message, voter) {
      var variant = this.now.user.variant;
-     console.log( voter + ' voted + ' message );
+     console.log( voter + ' voted ' + message );
      votes[ variant ].push( msg )
      groups[ variant ].now.receiveMessage( msg );
 }
