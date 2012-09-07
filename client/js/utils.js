@@ -1,11 +1,4 @@
 /*global $, now*/
-
-function f(d) {
-   console.log( d );
-}
-
-setTimeout( f( now.login ), 1000 );
-
 var login = function () {
 
     function createUser() {
