@@ -2,9 +2,7 @@ var httpServer = require('http').createServer(function(req, response){})
 httpServer.listen(3310);
 
 var sanitize = require('validator').sanitize;
-
 var nowjs = require("now");
-
 var everyone = nowjs.initialize(httpServer);
 
 var groups = []
@@ -25,10 +23,10 @@ everyone.log = [];
 everyone.votes = [];
 
 everyone.now.vote = function(message, voter) {
-     everyone.votes.push( message.id );
-     everyone.now.countVote( message.id );
-     console.log( "aaaa" );
-     console.log( everyone.votes );
+     var variant = this.now.user.variant;
+     console.log( voter + ' voted ' + message );
+     votes[ variant ].push( msg )
+     groups[ variant ].now.receiveMessage( msg );
 }
 
 everyone.now.distributeMessage = function(message, response ){
@@ -57,6 +55,7 @@ everyone.now.distributeMessage = function(message, response ){
   console.log( msg );
   // everyone.log.push( msg );
   console.log( everyone.log );
+  logs[ variant ].push( msg )
   groups[ variant ].now.receiveMessage( msg );
   if( message == '/clearall' ) {
        everyone.log = []
@@ -67,10 +66,20 @@ everyone.now.distributeMessage = function(message, response ){
 
 everyone.userId = 0;
 
-nowjs.on( 'connect' , function() {
-   var id = ++ everyone.userId;
-   var group = id % groups.length;
-   this.now.user = { id : id, variant : group };
+nowjs.on('connect', function () {
+    this.now.ok();
+} );
+
+everyone.now.l = function( id ) {
+   console.log('logging in ' + id);
+   id = parseInt( id );
+//   if( ! id ) {
+	everyone.userId ++;
+        id = everyone.userId;
+	console.log('   new user ' + id);
+//   }
+   var group = Math.abs( id ) % groups.length;
+   this.now.user = { id : id, variant : group }
    groups[ group ].addUser( this.user.clientId );
    // push log
    for( var e in logs[ group ] ) {
@@ -80,6 +89,10 @@ nowjs.on( 'connect' , function() {
    for( var e in votes [ group ] ) {
         e = votes[ group ][ e ];
         this.now.countVote( e );
-        console.log( 'send ' + e );
    }
-} );
+
+  console.log( this.user );
+
+   this.now.user.identity = this.clientId;
+   this.now.save() // store the data to a cookie
+};

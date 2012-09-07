@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>Chat</title>
+<head>
 <script type='text/javascript' src='http://foot.hiit.fi:3310/nowjs/now.js' ></script>
 <script type='text/javascript' src='lib/jquery.js'></script>
 <script type='text/javascript' src='lib/jquery-ui.js'></script>
@@ -154,8 +155,19 @@ $(document).ready(function(){
     addLine( $('#conv-' + msg.response.id) , msg );
   }
 
-  sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );
+  now.ok = function() {
+       var c = $.cookie( 'chat-id' );
+       now.l( c );
+  }
 
+  now.save = function() {
+     // always store a negative value
+     var id = now.user.id;
+     if( id > 0 ) id = -id;
+     $.cookie( 'chat-id', id );
+  }
+
+  sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );
   login();
 
 });
