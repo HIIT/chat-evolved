@@ -2,7 +2,7 @@
 <html>
 <head>
 <title>Chat</title>
-<script type='text/javascript' src='http://hand.hiit.fi:3310/nowjs/now.js' ></script>
+<script type='text/javascript' src='http://foot.hiit.fi:3310/nowjs/now.js' ></script>
 <script type='text/javascript' src='lib/jquery.js'></script>
 <script type='text/javascript' src='lib/jquery-ui.js'></script>
 <script type='text/javascript' src='lib/jquery.collapse.js'></script>
@@ -37,6 +37,9 @@
 </div>
 
 <script>
+console.log( 'a' );
+this.now.login( null );
+
 function addLine( base, msg) {
 
    var container = $('<div>' , { class : 'message' } );
