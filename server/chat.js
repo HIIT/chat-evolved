@@ -78,12 +78,13 @@ nowjs.on('connect', function () {
 everyone.now.l = function( id ) {
    id = parseInt( id );
    var group = id; 
-   if( ! id ) {
+   if( ! id && id >= 0 ) {
 	id = everyone.userId ++;
 	console.log('new user ' + id);
         group = Math.abs( id ) % groups.length;
    }
    this.now.user = { id : id, variant : group }
+   console.log( group );
    groups[ group ].addUser( this.user.clientId );
    // push log
    for( var e in logs[ group ] ) {
