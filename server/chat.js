@@ -53,10 +53,8 @@ everyone.now.distributeMessage = function(message, response ){
 
   // TODO: vary the messages based on variant
   if( variant == 0 ) {
-      console.log( 'Should be anonym' );
       msg.anonym = true;
   }
-  console.log( variant );
   console.log( msg );
   // everyone.log.push( msg );
   console.log( everyone.log );
@@ -78,13 +76,12 @@ nowjs.on('connect', function () {
 everyone.now.l = function( id ) {
    id = parseInt( id );
    var group = id; 
-   if( ! id && id >= 0 ) {
+   if( ! id ) {
 	id = everyone.userId ++;
 	console.log('new user ' + id);
         group = Math.abs( id ) % groups.length;
    }
    this.now.user = { id : id, variant : group }
-   console.log( group );
    groups[ group ].addUser( this.user.clientId );
    // push log
    for( var e in logs[ group ] ) {
