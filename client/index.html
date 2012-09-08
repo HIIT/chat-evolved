@@ -165,15 +165,14 @@ init = function(){
   }
 
   now.ok = function() {
-       var c = $.cookie( 'chat-id' );
+       var c = $.cookie( 'chat-group' );
        now.l( c );
   }
 
   now.save = function() {
      // always store a negative value
-     var id = now.user.id;
-     if( id > 0 ) id = -id;
-     $.cookie( 'chat-id', id );
+     var id = now.user.variant;
+     $.cookie( 'chat-group', id );
   }
 
   sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );

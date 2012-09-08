@@ -76,14 +76,13 @@ nowjs.on('connect', function () {
 } );
 
 everyone.now.l = function( id ) {
-   console.log('logging in ' + id);
    id = parseInt( id );
-//   if( ! id ) {
-	everyone.userId ++;
-        id = everyone.userId;
-	console.log('   new user ' + id);
-//   }
-   var group = Math.abs( id ) % groups.length;
+   var group = id; 
+   if( ! id ) {
+	id = everyone.userId ++;
+	console.log('new user ' + id);
+        group = Math.abs( id ) % groups.length;
+   }
    this.now.user = { id : id, variant : group }
    groups[ group ].addUser( this.user.clientId );
    // push log
@@ -96,8 +95,5 @@ everyone.now.l = function( id ) {
         this.now.countVote( e );
    }
 
-  console.log( this.user );
-
-   this.now.user.identity = this.clientId;
    this.now.save() // store the data to a cookie
 };
