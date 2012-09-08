@@ -1,5 +1,10 @@
+// load confic
+var conf = require('../client/conf.js').conf;
+
+console.log( conf );
+
 var httpServer = require('http').createServer(function(req, response){})
-httpServer.listen(3310);
+httpServer.listen( conf.port );
 
 var sanitize = require('validator').sanitize;
 var nowjs = require("now");
