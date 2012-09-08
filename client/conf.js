@@ -1,0 +1,4 @@
+var conf = {
+     server : '',
+     port : ''
+}
