@@ -32,12 +32,12 @@ var login = function () {
      var login = $('<div>');
     $('<p>', {html: 'Nick '} ).append($('<input>', { id : 'nick' }) ).appendTo(login);
     $('<p>', {html: 'Email '} ).append($('<input>', { id : 'email' }) ).appendTo(login);
-    $('<p>', {html: 'This system is a research prototype from <a href="http://www.hiit.fi">Helsinki Institute for Information technology</a>. By using the system, you agree on the <a href="http://foot.hiit.fi/main/doku.php/modalities_research_agreement">research terms</a>.', style: 'font-size: small' }).appendTo(login);
+    $('<p>', {html: 'This system is a research prototype from <a target="_blank" href="http://www.hiit.fi">Helsinki Institute for Information technology</a>. By using the system, you agree on the <a target="_blank" href="http://foot.hiit.fi/main/doku.php/modalities_research_agreement">research terms</a>.', style: 'font-size: small' }).appendTo(login);
     login.dialog({
         modal: true,
         title: 'Who are you?',
         buttons:[
-		   { text: "Terms of use", click: function(){ window.open("http://foot.hiit.fi/main/doku.php/modalities_research_agreement"); } }, 
+		   { text: "Terms of use", click: function(){ window.open("http://foot.hiit.fi/main/doku.php/modalities_research_agreement", "_blank"); } }, 
 		   { text: "Ok", click: function () { $(this).dialog("close"); } }
 		],
         beforeClose: createUser,
