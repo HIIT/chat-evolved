@@ -13,8 +13,6 @@
 
 <script type='text/javascript' src='js/utils.js'></script>
 <link rel='stylesheet' type='text/css' href='app.css' />
-
-<style>
 </head>
 <body>
 
@@ -32,15 +30,12 @@
 
 <div id='wrapper'>
 
-<input id='input' label='Message' class="ui-widget ui-corner-all" style="height: 32px;"></input>
-<div id='conv-0'>
-
-</div>
-
 </div>
 
 <script>
 var init = function() {
+  console.log("ok2");
+
   now.countVote = function( id ) {
     var val = $('#conv-' + id + '-likes').html();
     val = parseInt( val );
@@ -48,13 +43,14 @@ var init = function() {
   }
 
   now.receiveMessage = function(msg){
-    addLine( $('#conv-' + msg.response.id) , msg );
+      var p = $('<p>', { html: msg.content } );
+      $('#wrapper').prepend( p );
   }
 
+  // become a master
   now.ok = function() {
-  }
-
-  now.save = function() {
+      console.log('ok');
+      now.master();
   }
 
 };
