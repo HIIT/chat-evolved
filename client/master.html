@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chat</title>
+<script type='text/javascript' src='lib/jquery.js'></script>
+<script type='text/javascript' src='lib/jquery-ui.js'></script>
+<script type='text/javascript' src='lib/jquery.collapse.js'></script>
+<script type='text/javascript' src='lib/jquery.cookie.js'></script>
+<script type='text/javascript' src='lib/date.js'></script>
+<script type='text/javascript' src='conf.js'></script>
+
+<link rel='stylesheet' type='text/css' href='lib/css/ui-lightness/jquery-ui.css' />
+
+<script type='text/javascript' src='js/utils.js'></script>
+<link rel='stylesheet' type='text/css' href='app.css' />
+
+<style>
+</head>
+<body>
+
+<script type='text/javascript'>
+    var s = document.createElement('script');
+    s.async = true;
+    s.type = 'text/javascript';
+    s.src = conf.server + ':' + conf.port + '/nowjs/now.js';
+    s.onload = s.onreadystatechange = function() {
+        init();
+    };
+    var head = document.getElementsByTagName('head')[0];
+    head.appendChild(s);
+</script>
+
+<div id='wrapper'>
+
+<input id='input' label='Message' class="ui-widget ui-corner-all" style="height: 32px;"></input>
+<div id='conv-0'>
+
+</div>
+
+</div>
+
+<script>
+var init = function() {
+  now.countVote = function( id ) {
+    var val = $('#conv-' + id + '-likes').html();
+    val = parseInt( val );
+    $('#conv-' + id + '-likes').html( ++val );
+  }
+
+  now.receiveMessage = function(msg){
+    addLine( $('#conv-' + msg.response.id) , msg );
+  }
+
+  now.ok = function() {
+  }
+
+  now.save = function() {
+  }
+
+};
+</script>
+
+</body>
+</html>
