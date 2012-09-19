@@ -27,6 +27,12 @@ everyone.msgId = 0;
 everyone.log = [];
 everyone.votes = [];
 
+everyone.now.master = function() {
+   for( var i = 0; i < groups.length; i++ ) {
+      groups[ group ].addUser( this.user.clientId );
+   }
+}
+
 everyone.now.vote = function(message, voter) {
      var variant = this.now.user.variant;
      console.log( voter + ' voted ' + message );
