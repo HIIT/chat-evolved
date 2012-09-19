@@ -29,7 +29,7 @@ everyone.votes = [];
 
 everyone.now.master = function() {
    for( var i = 0; i < groups.length; i++ ) {
-      groups[ group ].addUser( this.user.clientId );
+      groups[ i ].addUser( this.user.clientId );
    }
 }
 
