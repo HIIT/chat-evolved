@@ -61,7 +61,7 @@ everyone.now.distributeMessage = function(message, response ){
   if( variant == 0 ) {
       msg.anonym = true;
   }
-  console.log( msg );
+  console.log( JSON.stringify( msg ) );
   // everyone.log.push( msg );
   console.log( everyone.log );
   logs[ variant ].push( msg )
