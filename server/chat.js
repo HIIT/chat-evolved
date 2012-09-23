@@ -100,11 +100,9 @@ everyone.now.l = function( id ) {
         e = votes[ group ][ e ];
         this.now.countVote( e );
    }
-   groups[ group ].getUsers( function(users) {
-	for( var u in names[ group ] ) {
-             console.log( users[u] );
-        } 
-   } );
+   for( var u in names[ group ] ) {
+	this.now.names( names[ group ][ u ] );
+   } 
 
    this.now.save() // store the data to a cookie
 };
