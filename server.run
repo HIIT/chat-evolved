@@ -1,0 +1,1 @@
+{ server: 'http://foot.hiit.fi', port: '3321', groups: 2 }
