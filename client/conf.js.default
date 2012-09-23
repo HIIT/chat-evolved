@@ -1,6 +1,7 @@
 var conf = {
      server : '',
-     port : ''
+     port : '',
+     show_participants : true
 }
 
 if( typeof( module ) !== 'undefined' ) {

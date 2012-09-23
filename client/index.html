@@ -42,7 +42,7 @@
 
 <div id='wrapper'>
 
-<div id='participants' style='float: right; width: 7%;'></div>
+<div id='participants' style='float: right; width: 7%; display: none;'></div>
 
 
 <input id='input' label='Message' class="ui-widget ui-corner-all" style="height: 32px;"></input>
@@ -180,6 +180,11 @@ init = function(){
 
   now.names = function(user) {
        $('#participants').append( user.nick + '<br/>' );
+  }
+
+  // change interface based on confs
+  if( conf.show_participants ) {
+       $('#participants').show();
   }
 
   sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );
