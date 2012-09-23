@@ -1,6 +1,7 @@
 var conf = {
      server : '',
      port : '',
+     groups : 1,
      show_participants : true
 }
 

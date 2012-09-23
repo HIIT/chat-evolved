@@ -16,7 +16,7 @@ var votes = []
 var names = []
 
 // get deciderd number of groups
-for( var i = 0; i < 1; i++ ) {
+for( var i = 0; i < conf.groups; i++ ) {
     var group = nowjs.getGroup("group-" + i);
     groups.push( group );
     logs.push( [] );
