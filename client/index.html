@@ -42,6 +42,9 @@
 
 <div id='wrapper'>
 
+<div id='participants' style='float: right; width: 7%;'></div>
+
+
 <input id='input' label='Message' class="ui-widget ui-corner-all" style="height: 32px;"></input>
 <div id='conv-0'>
 
@@ -176,7 +179,7 @@ init = function(){
   }
 
   now.names = function(user) {
-       console.log( user.nick );
+       $('#participants').append( user.nick + '<br/>' );
   }
 
   sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );
