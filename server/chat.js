@@ -13,13 +13,15 @@ var everyone = nowjs.initialize(httpServer);
 var groups = []
 var logs = []
 var votes = []
+var names = []
 
 // get deciderd number of groups
-for( var i = 0; i < 2; i++ ) {
+for( var i = 0; i < 1; i++ ) {
     var group = nowjs.getGroup("group-" + i);
     groups.push( group );
     logs.push( [] );
     votes.push( [] );
+    names.push( [] )
 }
 
 // common content
@@ -98,6 +100,17 @@ everyone.now.l = function( id ) {
         e = votes[ group ][ e ];
         this.now.countVote( e );
    }
+   groups[ group ].getUsers( function(users) {
+	for( var u in names[ group ] ) {
+             console.log( users[u] );
+        } 
+   } );
 
    this.now.save() // store the data to a cookie
 };
+
+everyone.now.join = function () {
+     names[ this.now.user.variant ].push( this.now.user );
+     // get the group with these names
+     groups[ this.now.user.variant ].now.names( this.now.user );
+}

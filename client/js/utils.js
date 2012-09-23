@@ -24,6 +24,7 @@ var login = function () {
         if( state ) {
             now.user.nick = nick.val();
             now.user.email = mail.val();
+            now.join();
         }
         return state;
     }

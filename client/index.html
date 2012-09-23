@@ -175,6 +175,10 @@ init = function(){
      $.cookie( 'chat-group', id );
   }
 
+  now.names = function(user) {
+       console.log( user.nick );
+  }
+
   sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );
   login();
 
