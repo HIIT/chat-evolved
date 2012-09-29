@@ -13,7 +13,6 @@ var everyone = nowjs.initialize(httpServer);
 
 // common data
 var groups = []
-var names = []
 
 everyone.msgId = 0;
 everyone.userId = 0;
@@ -25,9 +24,9 @@ for( var i = 0; i < conf.groups; i++ ) {
   group.server = nowjs.getGroup("group-" + i);
   group.logs = [];
   group.votes = [];
+  group.people = [];
 
   groups.push( group );
-  names.push( [] );
 }
 
 /**
@@ -131,8 +130,8 @@ everyone.now.login = function( existing ) {
         this.now.countVote( e );
    }
 
-   for( var u in names[ group ] ) {
-	   this.now.names( names[ group ][ u ] );
+   for( var u in group.people ) {
+	   this.now.names( group.people[ u ] );
    } 
 
    this.now.save() // store the data to a cookie
@@ -143,7 +142,8 @@ The function used when user logs in with the name, the name is send to every par
 
 */
 everyone.now.join = function () {
-     names[ this.now.user.variant ].push( this.now.user );
-     // get the group with these names
-     groups[ this.now.user.variant ].server.now.names( this.now.user );
+  // get the group and push notification to everyone
+  var group = groups[ this.now.user.variant ];
+  group.people.push( this.now.user );
+  group.server.now.names( this.now.user );
 }
