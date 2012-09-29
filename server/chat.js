@@ -49,7 +49,7 @@ everyone.now.vote = function(message, voter) {
   var group = groups[ this.now.user.variant ];
   console.log( voter + ' voted ' + message );
 
-  group.votes[ variant ].push( msg )
+  group.votes.push( msg )
   group.server.now.countVote( msg );
 }
 
