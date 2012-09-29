@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>Chat</title>
-<script type='text/javascript' src='http://humanisti.fixme.fi:8888/nowjs/now.js' ></script>
 <script type='text/javascript' src='lib/jquery.js'></script>
 <script type='text/javascript' src='lib/jquery-ui.js'></script>
 <script type='text/javascript' src='lib/jquery.collapse.js'></script>
@@ -15,6 +14,18 @@
 
 </head>
 <body>
+
+<script type='text/javascript'>
+  var s = document.createElement('script');
+  s.async = true;
+  s.type = 'text/javascript';
+  s.src = conf.server + ':' + conf.port + '/nowjs/now.js';
+  s.onload = s.onreadystatechange = function() {
+    init();
+  };
+  var head = document.getElementsByTagName('head')[0];
+  head.appendChild(s);
+</script>
 
 <div id='wrapper'>
 
