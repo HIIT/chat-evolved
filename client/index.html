@@ -167,9 +167,9 @@ init = function(){
     addLine( $('#conv-' + msg.response.id) , msg );
   }
 
-  now.ok = function() {
+  now.connected = function() {
        var c = $.cookie( 'chat-group' );
-       now.l( c );
+       now.login( c );
   }
 
   now.save = function() {

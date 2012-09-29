@@ -96,7 +96,7 @@ everyone.now.distributeMessage = function(message, response ){
 A listener for connect events in the server.
 */
 nowjs.on('connect', function () {
-    this.now.ok();
+    this.now.connected();
 } );
 
 /**
@@ -105,7 +105,7 @@ Also, pushes the logs and content to the user.
 
 @param existing the user's experiemntal variant if needed
 */
-everyone.now.l = function( existing ) {
+everyone.now.login = function( existing ) {
   var variant = parseInt( existing );
   var id = -1;
   
