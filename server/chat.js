@@ -7,6 +7,7 @@ var httpServer = require('http').createServer(function(req, response){})
 httpServer.listen( conf.port );
 
 var sanitize = require('validator').sanitize;
+
 var nowjs = require("now");
 var everyone = nowjs.initialize(httpServer);
 
@@ -15,7 +16,7 @@ var logs = []
 var votes = []
 var names = []
 
-// get deciderd number of groups
+// get the number of groups
 for( var i = 0; i < conf.groups; i++ ) {
     var group = nowjs.getGroup("group-" + i);
     groups.push( group );
@@ -29,12 +30,21 @@ everyone.msgId = 0;
 everyone.log = [];
 everyone.votes = [];
 
+/**
+A method used by the public screen to access the content in all chat spaces
+*/
 everyone.now.master = function() {
    for( var i = 0; i < groups.length; i++ ) {
       groups[ i ].addUser( this.user.clientId );
    }
 }
 
+/**
+Method for counting votes.
+
+@param message the message voted
+@param voter the user voted
+*/
 everyone.now.vote = function(message, voter) {
      var variant = this.now.user.variant;
      console.log( voter + ' voted ' + message );
@@ -42,6 +52,12 @@ everyone.now.vote = function(message, voter) {
      groups[ variant ].now.receiveMessage( msg );
 }
 
+/**
+Shares the content to all clients in this group.
+
+@param message the new message to be distributed
+@param response the message this message responses in the thread
+*/
 everyone.now.distributeMessage = function(message, response ){
   var variant = this.now.user.variant;
 
@@ -77,10 +93,19 @@ everyone.now.distributeMessage = function(message, response ){
 
 everyone.userId = 0;
 
+/**
+A listener for connect events in the server.
+*/
 nowjs.on('connect', function () {
     this.now.ok();
 } );
 
+/**
+Login the user and assign the user a random ID, if the user has not an ID before hand.
+Also, pushes the logs and content to the user.
+
+@param id the user's experiemntal variant if needed
+*/
 everyone.now.l = function( id ) {
    id = parseInt( id );
    var group = id; 
@@ -107,6 +132,10 @@ everyone.now.l = function( id ) {
    this.now.save() // store the data to a cookie
 };
 
+/**
+The function used when user logs in with the name, the name is send to every participant
+
+*/
 everyone.now.join = function () {
      names[ this.now.user.variant ].push( this.now.user );
      // get the group with these names
