@@ -87,7 +87,7 @@ everyone.now.distributeMessage = function(message, response ){
 
   var group = groups[ this.now.user.variant ];
 
-  group.logs[ variant ].push( msg )
+  group.logs.push( msg )
   group.server.now.receiveMessage( msg );
 
 };
