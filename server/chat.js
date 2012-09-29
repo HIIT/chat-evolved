@@ -145,5 +145,5 @@ The function used when user logs in with the name, the name is send to every par
 everyone.now.join = function () {
      names[ this.now.user.variant ].push( this.now.user );
      // get the group with these names
-     groups[ this.now.user.variant ].now.names( this.now.user );
+     groups[ this.now.user.variant ].server.now.names( this.now.user );
 }
