@@ -50,7 +50,7 @@ everyone.now.vote = function(message, voter) {
   console.log( voter + ' voted ' + message );
 
   group.votes[ variant ].push( msg )
-  group.server.now.receiveMessage( msg );
+  group.server.now.countVote( msg );
 }
 
 /**
