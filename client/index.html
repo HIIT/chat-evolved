@@ -11,8 +11,6 @@
 
 <link rel='stylesheet' type='text/css' href='lib/css/ui-lightness/jquery-ui.css' />
 
-<script type='text/javascript' src='http://localhost:8888/nowjs/now.js'></script>
-
 <script type='text/javascript' src='js/utils.js'></script>
 <link rel='stylesheet' type='text/css' href='app.css' />
 
@@ -30,7 +28,6 @@
 </head>
 <body>
 
-<!--
 <script type='text/javascript'>
     var s = document.createElement('script');
     s.async = true;
@@ -42,7 +39,6 @@
     var head = document.getElementsByTagName('head')[0];
     head.appendChild(s);
 </script>
--->
 
 <div id='wrapper'>
 
@@ -175,12 +171,12 @@ function sendMsg ( field, re ) {
   } );
 }
 
-// init = function(){
+init = function(){
 
-  now.countVote = function( id ) {
-    var val = $('#conv-' + id + '-likes').html();
+  now.countVote = function( msg ) {
+    var val = $('#conv-' +msg.id + '-likes').html();
     val = parseInt( val );
-    $('#conv-' + id + '-likes').html( ++val );
+    $('#conv-' + msg.id + '-likes').html( ++val );
   }
 
   now.receiveMessage = function(msg){
@@ -214,7 +210,7 @@ function sendMsg ( field, re ) {
   sendMsg( $('#input') , { id : 0, depth : -1, likes : false } );
   login();
 
-// };
+};
 </script>
 
 </body>
