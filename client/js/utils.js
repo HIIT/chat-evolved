@@ -1,27 +1,48 @@
 /*global $, now*/
-
 var login = function () {
 
     function createUser() {
+        var state = true;
+
         var nick = $('#nick');
         // require a nick
         if (nick.val() === '') {
             nick.effect('pulsate');
-            return false;
+            state = false;
         }
 
-        now.user.nick = nick.val();
-        return true;
+        // simple and stupid
+        var mailtest = /.*@.*\..*/;
+
+        var mail = $('#email');
+
+        if( ! mailtest.test(mail.val()) ) {
+           mail.effect('pulsate');
+           state = false;
+        }
+
+        if( state ) {
+            now.user.nick = nick.val();
+            now.user.email = mail.val();
+            now.join();
+        }
+        return state;
     }
 
     // user login dialog
-    var login = $('<div>');
-    login.append($('<input>', { id : 'nick' }));
+     var login = $('<div>');
+    $('<p>', {html: 'Nick '} ).append($('<input>', { id : 'nick' }) ).appendTo(login);
+    $('<p>', {html: 'Email '} ).append($('<input>', { id : 'email' }) ).appendTo(login);
+    $('<p>', {html: 'This system is a research prototype from <a target="_blank" href="http://www.hiit.fi">Helsinki Institute for Information technology</a>. By using the system, you agree on the <a target="_blank" href="http://foot.hiit.fi/main/doku.php/modalities_research_agreement">research terms</a>.', style: 'font-size: small' }).appendTo(login);
     login.dialog({
         modal: true,
         title: 'Who are you?',
-        buttons: [ { text: "Ok", click: function () { $(this).dialog("close"); } } ],
-        beforeClose: createUser
+        buttons:[
+		   { text: "Terms of use", click: function(){ window.open("http://foot.hiit.fi/main/doku.php/modalities_research_agreement", "_blank"); } }, 
+		   { text: "Ok", click: function () { $(this).dialog("close"); } }
+		],
+        beforeClose: createUser,
+	width: 600
     });
 
 };
