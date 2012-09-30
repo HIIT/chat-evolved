@@ -48,6 +48,19 @@
 
 <div id='participants' style='float: right; width: 7%; display: none;'></div>
 
+<div id="anonym" class='options'>
+<input type="radio" id="radio1" name="anonym" value="true" /><label for="radio1">Anonymous</label>
+<input type="radio" id="radio2" name="anonym" value="false" checked="true" /><label for="radio2">With name</label>
+</div>
+
+<div id="likes" class='options'>
+<input type="radio" id="radio3" name="likes" value="true" /><label for="radio3">With likes</label>
+<input type="radio" id="radio4" name="likes" value="false" checked="true" /><label for="radio4">No likes</label>
+</div>
+
+<script type="text/javascript">
+$('.options').buttonset();
+</script>
 
 <input id='input' label='Message' class="ui-widget ui-corner-all" style="height: 32px;"></input>
 <div id='conv-0'>
@@ -150,6 +163,13 @@ function sendMsg ( field, re ) {
     if(e.keyCode == 13) {
       var t = f.val();
       f.val('');
+
+      if( re.depth == -1 ) {
+        re.anonym = $('[name="anonym"]:checked').val() == "true";
+        re.likes = $('[name="likes"]:checked').val() == "true";
+      }
+
+
       now.distributeMessage( t , re );
     }
   } );

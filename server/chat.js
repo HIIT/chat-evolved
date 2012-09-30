@@ -76,10 +76,8 @@ everyone.now.distributeMessage = function(message, response ){
     depth: response.depth + 1,
   }
 
-  // TODO: vary the messages based on variant
-  if( variant == 0 ) {
-      msg.anonym = true;
-  }
+  msg.anonym = response.anonym;
+  msg.likes = response.likes;
 
   // logging
   console.log( JSON.stringify( msg ) );
