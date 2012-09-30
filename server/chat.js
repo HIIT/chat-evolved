@@ -122,7 +122,7 @@ everyone.now.login = function( existing ) {
    
    // push logs
    for( var e in group.logs ) {
-      e = grup.logs[e];
+      e = group.logs[e];
       this.now.receiveMessage( e );
    }
    for( var e in group.votes ) {
