@@ -168,14 +168,13 @@ init = function(){
   }
 
   now.ok = function() {
-       var c = $.cookie( 'chat-group' );
-       now.l( c );
+       var user = $.cookie( 'chat-user' );
+       now.l( user );
   }
 
   now.save = function() {
      // always store a negative value
-     var id = now.user.variant;
-     $.cookie( 'chat-group', id );
+     $.cookie( 'chat-user', JSON.stringify( this.now.user ) );
   }
 
   now.names = function(user) {

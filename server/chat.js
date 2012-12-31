@@ -81,15 +81,22 @@ nowjs.on('connect', function () {
     this.now.ok();
 } );
 
-everyone.now.l = function( id ) {
-   id = parseInt( id );
-   var group = id; 
-   if( ! id ) {
+everyone.now.l = function( data ) {
+   data = JSON.parse( data );   
+
+   var id, group;
+
+   if( data ) {
+      var id = data.id;
+      var group = data.variant;
+   } else {
 	id = everyone.userId ++;
 	console.log('new user ' + id);
         group = Math.abs( id ) % groups.length;
    }
-   this.now.user = { id : id, variant : group }
+
+   this.now.user = { id : id, variant : group };
+
    groups[ group ].addUser( this.user.clientId );
    // push log
    for( var e in logs[ group ] ) {
@@ -111,4 +118,6 @@ everyone.now.join = function () {
      names[ this.now.user.variant ].push( this.now.user );
      // get the group with these names
      groups[ this.now.user.variant ].now.names( this.now.user );
+
+    this.now.save();
 }
