@@ -84,18 +84,19 @@ nowjs.on('connect', function () {
 everyone.now.l = function( data ) {
    data = JSON.parse( data );   
 
-   var id, group;
+   var id, group, nick;
 
    if( data ) {
       var id = data.id;
       var group = data.variant;
+      var nick = data.nick;
    } else {
 	id = everyone.userId ++;
 	console.log('new user ' + id);
         group = Math.abs( id ) % groups.length;
    }
 
-   this.now.user = { id : id, variant : group };
+   this.now.user = { id : id, variant : group, nick : nick };
 
    groups[ group ].addUser( this.user.clientId );
    // push log
