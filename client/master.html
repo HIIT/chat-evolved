@@ -34,13 +34,6 @@
 
 <script>
 var init = function() {
-  console.log("ok2");
-
-  now.countVote = function( id ) {
-    var val = $('#conv-' + id + '-likes').html();
-    val = parseInt( val );
-    $('#conv-' + id + '-likes').html( ++val );
-  }
 
   now.receiveMessage = function(msg){
       var p = $('<p>', { html: msg.content } );
@@ -48,8 +41,7 @@ var init = function() {
   }
 
   // become a master
-  now.ok = function() {
-      console.log('ok');
+  now.connected = function() {
       now.master();
   }
 

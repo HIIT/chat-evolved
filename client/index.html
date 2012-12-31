@@ -4,8 +4,8 @@
 <title>Chat</title>
 <script type='text/javascript' src='lib/jquery.js'></script>
 <script type='text/javascript' src='lib/jquery-ui.js'></script>
-<script type='text/javascript' src='lib/jquery.collapse.js'></script>
 <script type='text/javascript' src='lib/jquery.cookie.js'></script>
+<script type='text/javascript' src='lib/jquery.collapse.js'></script>
 <script type='text/javascript' src='lib/date.js'></script>
 <script type='text/javascript' src='conf.js'></script>
 
@@ -27,18 +27,6 @@
 </style>
 </head>
 <body>
-
-<script type='text/javascript'>
-    var s = document.createElement('script');
-    s.async = true;
-    s.type = 'text/javascript';
-    s.src = conf.server + ':' + conf.port + '/nowjs/now.js';
-    s.onload = s.onreadystatechange = function() {
-        init();
-    };
-    var head = document.getElementsByTagName('head')[0];
-    head.appendChild(s);
-</script>
 
 <div id='wrapper'>
 
@@ -151,12 +139,12 @@ function sendMsg ( field, re ) {
   } );
 }
 
-init = function(){
+var init = function(){
 
-  now.countVote = function( id ) {
-    var val = $('#conv-' + id + '-likes').html();
+  now.countVote = function( msg ) {
+    var val = $('#conv-' + msg.id + '-likes').html();
     val = parseInt( val );
-    $('#conv-' + id + '-likes').html( ++val );
+    $('#conv-' + msg.id + '-likes').html( ++val );
   }
 
   now.receiveMessage = function(msg){
@@ -167,9 +155,9 @@ init = function(){
     addLine( $('#conv-' + msg.response.id) , msg );
   }
 
-  now.ok = function() {
-       var user = $.cookie( 'chat-user' );
-       now.l( user );
+  now.connected = function() {
+       var c = $.cookie( 'chat-group' );
+       now.login( c );
   }
 
   now.save = function() {
@@ -190,6 +178,21 @@ init = function(){
   login();
 
 };
+
+console.log('Ok!');
+</script>
+
+<script type='text/javascript'>
+  // dynamic load of now.js with given configuration
+  var s = document.createElement('script');
+  s.async = true;
+  s.type = 'text/javascript';
+  s.src = conf.server + ':' + conf.port + '/nowjs/now.js';
+  s.onload = s.onreadystatechange = function() {
+    init();
+  };
+  var head = document.getElementsByTagName('head')[0];
+  head.appendChild(s);
 </script>
 
 </body>
