@@ -30,9 +30,18 @@ var login = function () {
     }
 
     // user login dialog
-     var login = $('<div>');
-    $('<p>', {html: 'Nick '} ).append($('<input>', { id : 'nick' }) ).appendTo(login);
-    $('<p>', {html: 'Email '} ).append($('<input>', { id : 'email' }) ).appendTo(login);
+    var login = $('<div>');
+
+    var data = JSON.parse( $.cookie( 'chat-user' ) );
+    var d = { nick : "", email : "" };
+
+    if( data ) {
+        d.nick = data.nick;
+        d.email = data.email;
+    }
+
+    $('<p>', {html: 'Nick '} ).append($('<input>', { id : 'nick', val : d.nick }) ).appendTo(login);
+    $('<p>', {html: 'Email '} ).append($('<input>', { id : 'email', val: d.email }) ).appendTo(login);
     $('<p>', {html: 'This system is a research prototype from <a target="_blank" href="http://www.hiit.fi">Helsinki Institute for Information technology</a>. By using the system, you agree on the <a target="_blank" href="http://foot.hiit.fi/main/doku.php/modalities_research_agreement">research terms</a>.', style: 'font-size: small' }).appendTo(login);
     login.dialog({
         modal: true,
